@@ -1,10 +1,43 @@
 <template>
-  <q-page class="">
-    <form-recibo />
+  <q-page class="BgSugar">
+    <div style="border: 1px solid red; width: 100vw; height: 90vh">
+      <q-tabs
+        v-model="tab"
+        dense
+        class="text-grey"
+        active-color="primary"
+        indicator-color="primary"
+        align="justify"
+        narrow-indicator
+      >
+        <q-tab name="form" label="Dados do Recibo" />
+        <q-tab name="recibo" label="Recibo" />
+      </q-tabs>
+      <q-separator />
+      <q-tab-panels v-model="tab" animated>
+        <q-tab-panel name="form">
+          <form-recibo />
+        </q-tab-panel>
+      </q-tab-panels>
+      <q-tab-panels v-model="tab" animated>
+        <q-tab-panel name="recibo">
+          <div>RECIBO</div>
+        </q-tab-panel>
+      </q-tab-panels>
+    </div>
   </q-page>
 </template>
 
 <script setup>
+import { ref } from "vue";
 import headerRecibo from "components/headerRecibo.vue";
 import formRecibo from "components/FormRecibo.vue";
+
+const tab = ref("form");
 </script>
+
+<style>
+.BgSugar {
+  background-colord: #f7f7f7;
+}
+</style>
