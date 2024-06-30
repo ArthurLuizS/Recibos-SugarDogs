@@ -1,6 +1,6 @@
 <template>
   <q-page class="BgSugar">
-    <div style="border: 1px solid red; width: 100vw; height: 90vh">
+    <div>
       <q-tabs
         v-model="tab"
         dense
@@ -39,5 +39,8 @@ const tab = ref("form");
 <style>
 .BgSugar {
   background-colord: #f7f7f7;
+}
+.q-tab-panel {
+  padding: 0;
 }
 </style>
