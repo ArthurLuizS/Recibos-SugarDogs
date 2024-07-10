@@ -1,4 +1,4 @@
 <template>
-  <div>Recibo</div>
+  <div>Recibo - test git</div>
 </template>
 <script setup></script>
