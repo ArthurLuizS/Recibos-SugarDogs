@@ -21,7 +21,7 @@
       </q-tab-panels>
       <q-tab-panels v-model="tab" animated>
         <q-tab-panel name="recibo">
-          <div>RECIBO</div>
+          <recibo />
         </q-tab-panel>
       </q-tab-panels>
     </div>
@@ -32,6 +32,7 @@
 import { ref } from "vue";
 import headerRecibo from "components/headerRecibo.vue";
 import formRecibo from "components/FormRecibo.vue";
+import recibo from "components/ReciboSugar.vue";
 
 const tab = ref("form");
 </script>
