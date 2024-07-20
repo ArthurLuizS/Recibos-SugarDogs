@@ -20,35 +20,35 @@
               rounded
               outlined
               label="Data do Recibo"
-              v-model="form.infoData.data"
+              v-model="reciboStore.form.infoData.data"
             ></q-input>
             <q-input
               dense
               rounded
               outlined
               label="Nome do Tutor"
-              v-model="form.infoData.tutorName"
+              v-model="reciboStore.form.infoData.tutorName"
             ></q-input>
             <q-input
               dense
               rounded
               outlined
               label="Nome do Pet"
-              v-model="form.infoData.petName"
+              v-model="reciboStore.form.infoData.petName"
             ></q-input>
             <q-input
               dense
               rounded
               outlined
               label="Raça do Pet"
-              v-model="form.infoData.petBreed"
+              v-model="reciboStore.form.infoData.petBreed"
             ></q-input>
             <q-input
               dense
               rounded
               outlined
               label="Contato"
-              v-model="form.infoData.contact"
+              v-model="reciboStore.form.infoData.contact"
             ></q-input>
             <q-separator style="width: 100%" />
           </div>
@@ -57,7 +57,7 @@
           <label>Serviços</label>
           <div
             class="FormData flex row q-pa-xs q-pt-lg"
-            v-for="(service, index) in form.serviceData"
+            v-for="(service, index) in reciboStore.form.serviceData"
             :key="index"
             style="position: relative; gap: 16px"
           >
@@ -68,10 +68,29 @@
               rounded
               outlined
               label="Tipo"
+              v-model="reciboStore.form.serviceData[index].type"
             ></q-select>
-            <q-input dense rounded outlined label="Quantidade"></q-input>
-            <q-input dense rounded outlined label="Preço Unitário"></q-input>
-            <q-input dense rounded outlined label="Desconto"></q-input>
+            <q-input
+              dense
+              rounded
+              outlined
+              label="Quantidade"
+              v-model="reciboStore.form.serviceData[index].quantity"
+            ></q-input>
+            <q-input
+              dense
+              rounded
+              outlined
+              label="Preço Unitário"
+              v-model="reciboStore.form.serviceData[index].unitPrice"
+            ></q-input>
+            <q-input
+              dense
+              rounded
+              outlined
+              label="Desconto"
+              v-model="reciboStore.form.serviceData[index].discount"
+            ></q-input>
             <q-btn
               round
               icon="delete"
@@ -87,7 +106,7 @@
             color="primary"
             icon="add"
             size="xs"
-            @click="moreService"
+            @click="reciboStore.moreService"
             style="
               position: absolute;
               bottom: -25px;
@@ -112,30 +131,6 @@ const $q = useQuasar();
 const reciboStore = useRecibo();
 
 const options = ref(["Day Use", "Hospedagem", "Banho", "Banho + Tosa"]);
-const form = ref({
-  infoData: {
-    data: null,
-    tutorName: null,
-    petName: null,
-    petBreed: null,
-    contact: null,
-  },
-  serviceData: [
-    {
-      tipe: null,
-      quantity: null,
-      unitPrice: null,
-    },
-  ],
-});
-
-const moreService = () => {
-  form.value.serviceData.push({
-    tipe: null,
-    quantity: null,
-    unitPrice: null,
-  });
-};
 
 const confirmDelete = (indexService) => {
   $q.dialog({
@@ -144,15 +139,12 @@ const confirmDelete = (indexService) => {
     cancel: true,
     persistent: true,
   })
+
     .onOk(() => {
       // console.log('>>>> OK')
-      form.value.serviceData.splice(indexService, 1);
+      reciboStore.form.serviceData.splice(indexService, 1);
     })
     .onCancel(() => {});
-};
-
-const gerarRecibo = () => {
-  reciboStore.form = form.value;
 };
 </script>
 
