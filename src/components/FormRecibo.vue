@@ -2,8 +2,8 @@
   <div class="">
     <q-form
       class="flex items-center justify-center column full-width"
-      @submit="onSubmit"
       @reset="onReset"
+      @submit="gerarRecibo"
     >
       <q-scroll-area
         :style="
@@ -98,16 +98,18 @@
         </div>
       </q-scroll-area>
       <div class="full-width flex justify-end q-pa-xs">
-        <q-btn rounded type="submit" color="primary">Gerar Recibo</q-btn>
+        <q-btn rounded color="primary" type="submit">Gerar Reciboo</q-btn>
       </div>
     </q-form>
   </div>
 </template>
 <script setup>
 import { ref } from "vue";
+import { useRecibo } from "src/stores/recibo";
 import { useQuasar } from "quasar";
 
 const $q = useQuasar();
+const reciboStore = useRecibo();
 
 const options = ref(["Day Use", "Hospedagem", "Banho", "Banho + Tosa"]);
 const form = ref({
@@ -149,8 +151,8 @@ const confirmDelete = (indexService) => {
     .onCancel(() => {});
 };
 
-const onSubmit = () => {
-  console.log(form.value);
+const gerarRecibo = () => {
+  reciboStore.form = form.value;
 };
 </script>
 
