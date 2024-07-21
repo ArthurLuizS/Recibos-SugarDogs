@@ -6,7 +6,13 @@
       </div>
       <div class="flex column">
         <span>Recibo</span>
-        <span>{{ dataFormatada }}</span>
+        <span>
+          {{
+            reciboStore.form.infoData.data != null
+              ? reciboStore.form.infoData.data
+              : dataFormatada
+          }}
+        </span>
         <div>
           Para <span>{{ reciboStore.form?.infoData.tutorName }} </span>
         </div>

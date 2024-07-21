@@ -19,9 +19,32 @@
               dense
               rounded
               outlined
-              label="Data do Recibo"
               v-model="reciboStore.form.infoData.data"
-            ></q-input>
+            >
+              <template v-slot:append>
+                <q-icon name="event" class="cursor-pointer">
+                  <q-popup-proxy
+                    cover
+                    transition-show="scale"
+                    transition-hide="scale"
+                  >
+                    <q-date
+                      v-model="todayValue"
+                      @update:model-value="onDateInput"
+                    >
+                      <div class="row items-center justify-end">
+                        <q-btn
+                          v-close-popup
+                          label="Fechar"
+                          color="primary"
+                          flat
+                        />
+                      </div>
+                    </q-date>
+                  </q-popup-proxy>
+                </q-icon>
+              </template>
+            </q-input>
             <q-input
               dense
               rounded
@@ -90,6 +113,7 @@
               outlined
               label="Desconto"
               v-model="reciboStore.form.serviceData[index].discount"
+              @update:model-value="discount(index)"
             ></q-input>
             <q-btn
               round
@@ -123,12 +147,13 @@
   </div>
 </template>
 <script setup>
-import { ref } from "vue";
+import { ref, onBeforeMount } from "vue";
 import { useRecibo } from "src/stores/recibo";
 import { useQuasar } from "quasar";
 
 const $q = useQuasar();
 const reciboStore = useRecibo();
+const todayValue = ref();
 
 const options = ref(["Day Use", "Hospedagem", "Banho", "Banho + Tosa"]);
 
@@ -146,6 +171,39 @@ const confirmDelete = (indexService) => {
     })
     .onCancel(() => {});
 };
+
+const formatDate = (date) => {
+  if (!date) return "";
+  const [year, month, day] = date.split("/");
+  return `${day}/${month}/${year}`;
+};
+
+const onDateInput = () => {
+  console.log(todayValue.value);
+  reciboStore.form.infoData.data = formatDate(todayValue.value);
+};
+
+const discount = (index) => {
+  // reciboStore.form.serviceData[index].servicePrice =
+  //   (parseInt(reciboStore.form.serviceData[index].discount) / 100) *
+  //     parseInt(reciboStore.form.serviceData[index].unitPrice) -
+  //   parseInt(reciboStore.form.serviceData[index].unitPrice);
+  // console.log(reciboStore.form.serviceData[index]);
+};
+
+const gerarRecibo = () => {
+  console.log("gerar recibo");
+  reciboStore.discount;
+};
+
+onBeforeMount(() => {
+  const dataAtual = new Date();
+  const dia = String(dataAtual.getDate()).padStart(2, "0");
+  const mes = String(dataAtual.getMonth() + 1).padStart(2, "0");
+  const ano = dataAtual.getFullYear();
+
+  reciboStore.form.infoData.data = `${dia}/${mes}/${ano}`;
+});
 </script>
 
 <style>
