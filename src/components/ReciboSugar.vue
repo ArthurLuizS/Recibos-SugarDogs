@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container" ref="ReciboSugar">
     <div class="header tw-p-[20px] flex row justify-between">
       <div>
         <q-img src="src/assets/sugar-logo.png" class="tw-w-[120px]" />

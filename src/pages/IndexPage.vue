@@ -109,19 +109,39 @@
         </q-step>
 
         <q-step :name="3" title="Recibo" icon="add_comment">
-          <recibo />
+          <div ref="reciboDocument" class="tw-p-3">
+            <div>
+              <recibo />
+            </div>
+            <div class="pdf-only">
+              <span>
+                Orçamento elaborado por: Leticia Cândida Santos da Silva
+              </span>
+              <span>
+                Este é um recibo dos serviços da Sugar Dogs, sujeito às
+                condições a seguir indicadas: o preço da diária pode estar
+                sujeito a alterações em casos especificos, como: 1 - Datas
+                comemorátivas, 2 - Pacotes de hospedagens, 3 - Fidelidade. Todos
+                os valores são repassados previamente aos serviços.
+              </span>
+              <span> Agradecemos o seu contato! </span>
+              <span>
+                Sugar Dogs, Rua Padre Antonio Fernandes, 87 Cordeiro Recife,
+                CEP: 50630-010 Telefone (81) 99888-4759 CNPJ: 48.174.470/0001-06
+              </span>
+            </div>
+          </div>
         </q-step>
 
         <template v-slot:navigation>
           <q-stepper-navigation>
             <q-btn
-              @click="
-                $refs.stepper.next();
-                step === 3 ? reciboStore.discount : '';
-              "
+              @click="handleButton"
               color="primary"
               :label="step === 3 ? 'Exportar Recibo' : 'Continuar'"
+              v-if="step < 3"
             />
+            <q-btn v-else label="exportar recibo" @click="gerarRecibo" />
             <q-btn
               v-if="step > 1"
               flat
@@ -133,6 +153,7 @@
           </q-stepper-navigation>
         </template>
       </q-stepper>
+      {{ step }}
     </div>
     <!-- <q-tabs
         v-model="tab"
@@ -166,15 +187,43 @@ import headerRecibo from "components/headerRecibo.vue";
 import formRecibo from "components/FormRecibo.vue";
 import recibo from "components/ReciboSugar.vue";
 import { useRecibo } from "src/stores/recibo";
+import html2pdf from "html2pdf.js";
 
 const reciboStore = useRecibo();
+const stepper = ref();
+const reciboDocument = ref();
+const ReciboSugar = ref();
 const tab = ref("form");
 
 const step = ref(1);
+const doneRecibo = ref(false);
 const todayValue = ref();
 
 const calcularDesconto = () => {
   console.log("calcular desconto");
+};
+
+const gerarRecibo = () => {
+  console.log("gerar recibo");
+  console.log(reciboDocument);
+  console.log(ReciboSugar);
+  const options = {
+    margin: 1,
+    filename: "Recibo-SugarDogs.pdf",
+    image: { type: "jpeg", quality: 0.98 },
+    html2canvas: { scale: 2 },
+    jsPDF: { unit: "in", format: "letter", orientation: "portrait" },
+  };
+
+  html2pdf().from(reciboDocument.value).set(options).save();
+};
+
+const handleButton = () => {
+  stepper.value.next();
+  if (step.value === 3) {
+    reciboStore.discount;
+    doneRecibo.value = true;
+  }
 };
 
 onBeforeMount(() => {
@@ -197,6 +246,11 @@ onBeforeMount(() => {
 .q-stepper--horizontal .q-stepper__step-inner {
   padding: 12px;
 }
+
+.pdf-only {
+  display: none;
+}
+
 /* .FormData > * {
   width: 150px;
 } */
