@@ -43,11 +43,11 @@
             v-for="(service, index) in reciboStore.form.serviceData"
             :key="index"
           >
-            <td>{{ service?.quantity }}</td>
+            <td>{{ service?.quantity }} Uni.</td>
             <td>{{ service?.type }}</td>
-            <td>{{ service?.unitPrice }}</td>
-            <td>{{ service?.discount }}</td>
-            <td>0 total</td>
+            <td>{{ service?.unitPrice }}R$</td>
+            <td>{{ service?.discount }}%</td>
+            <td>{{ service.servicePrice }}R$</td>
           </tr>
         </tbody>
       </table>

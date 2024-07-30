@@ -9,77 +9,13 @@
         :style="
           $q.screen.gt.sm
             ? 'height: 80vh; width: 70vw;'
-            : 'height: 90vh; width: 97vw'
+            : 'height: 60vh; width: 95vw'
         "
       >
-        <div class="flex column full-width">
-          <label>Dados do Tutor e PET</label>
-          <div class="flex row items-center FormData q-pa-xs" style="gap: 16px">
-            <q-input
-              dense
-              rounded
-              outlined
-              v-model="reciboStore.form.infoData.data"
-            >
-              <template v-slot:append>
-                <q-icon name="event" class="cursor-pointer">
-                  <q-popup-proxy
-                    cover
-                    transition-show="scale"
-                    transition-hide="scale"
-                  >
-                    <q-date
-                      v-model="todayValue"
-                      @update:model-value="onDateInput"
-                    >
-                      <div class="row items-center justify-end">
-                        <q-btn
-                          v-close-popup
-                          label="Fechar"
-                          color="primary"
-                          flat
-                        />
-                      </div>
-                    </q-date>
-                  </q-popup-proxy>
-                </q-icon>
-              </template>
-            </q-input>
-            <q-input
-              dense
-              rounded
-              outlined
-              label="Nome do Tutor"
-              v-model="reciboStore.form.infoData.tutorName"
-            ></q-input>
-            <q-input
-              dense
-              rounded
-              outlined
-              label="Nome do Pet"
-              v-model="reciboStore.form.infoData.petName"
-            ></q-input>
-            <q-input
-              dense
-              rounded
-              outlined
-              label="Raça do Pet"
-              v-model="reciboStore.form.infoData.petBreed"
-            ></q-input>
-            <q-input
-              dense
-              rounded
-              outlined
-              label="Contato"
-              v-model="reciboStore.form.infoData.contact"
-            ></q-input>
-            <q-separator style="width: 100%" />
-          </div>
-        </div>
         <div class="full-width" style="position: relative">
           <label>Serviços</label>
           <div
-            class="FormData flex row q-pa-xs q-pt-lg"
+            class="FormData flex row q-pt-lg"
             v-for="(service, index) in reciboStore.form.serviceData"
             :key="index"
             style="position: relative; gap: 16px"
@@ -106,13 +42,17 @@
               outlined
               label="Preço Unitário"
               v-model="reciboStore.form.serviceData[index].unitPrice"
+              mask="#,##"
+              fill-mask="0"
+              reverse-fill-mask
             ></q-input>
             <q-input
               dense
               rounded
               outlined
-              label="Desconto"
+              label="Desconto (%)"
               v-model="reciboStore.form.serviceData[index].discount"
+              type="number"
               @update:model-value="discount(index)"
             ></q-input>
             <q-btn
@@ -121,7 +61,11 @@
               color="negative"
               size="xs"
               style="position: absolute; right: 5px; top: 1px; width: 10px"
-              @click="confirmDelete(index)"
+              @click="
+                reciboStore.form.serviceData[index].type != null
+                  ? confirmDelete(index)
+                  : reciboStore.form.serviceData.splice(index, 1)
+              "
             />
             <q-separator style="width: 100%" />
           </div>
