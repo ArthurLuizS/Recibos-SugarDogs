@@ -1,26 +1,26 @@
 <template>
-  <div class="">
-    <q-form
-      class="flex items-center justify-center column full-width"
-      @reset="onReset"
-      @submit="gerarRecibo"
-    >
-      <q-scroll-area
-        :style="
-          $q.screen.gt.sm
-            ? 'height: 80vh; width: 70vw;'
-            : 'height: 60vh; width: 95vw'
-        "
-      >
-        <div class="full-width" style="position: relative">
-          <label>Serviços</label>
-          <div
-            class="FormData flex row q-pt-lg"
-            v-for="(service, index) in reciboStore.form.serviceData"
-            :key="index"
-            style="position: relative; gap: 16px"
+  <q-form
+    class="flex items-center justify-center column tw-full-width tw-h-full"
+    @reset="onReset"
+    @submit="gerarRecibo"
+  >
+    <q-scroll-area class="tw-w-full tw-h-full">
+      <div class="full-width" style="position: relative">
+        <h1 class="tw-text-lg tw-text-center">
+          Registro dos Serviços oferecidos ao PET
+        </h1>
+        <div
+          class="FormData tw-min-h-[150px]"
+          v-for="(service, index) in reciboStore.form.serviceData"
+          :key="index"
+          style="position: relative"
+        >
+          <label style="position: absolute; top: 2px">
+            Serviço: {{ 1 + index }}</label
           >
-            <label style="position: absolute; top: 2px">{{ 1 + index }}</label>
+          <div
+            class="flex row tw-justify-between q-pt-lg q-mb-md tw-gap-3 tw-mt-1"
+          >
             <q-select
               dense
               :options="options"
@@ -28,6 +28,7 @@
               outlined
               label="Tipo"
               v-model="reciboStore.form.serviceData[index].type"
+              class="tw-w-[48%]"
             ></q-select>
             <q-input
               dense
@@ -35,7 +36,8 @@
               outlined
               label="Quantidade"
               v-model="reciboStore.form.serviceData[index].quantity"
-            ></q-input>
+              class="tw-w-[48%]"
+            />
             <q-input
               dense
               rounded
@@ -45,7 +47,8 @@
               mask="#,##"
               fill-mask="0"
               reverse-fill-mask
-            ></q-input>
+              class="tw-w-[48%]"
+            />
             <q-input
               dense
               rounded
@@ -54,41 +57,39 @@
               v-model="reciboStore.form.serviceData[index].discount"
               type="number"
               @update:model-value="discount(index)"
-            ></q-input>
-            <q-btn
-              round
-              icon="delete"
-              color="negative"
-              size="xs"
-              style="position: absolute; right: 5px; top: 1px; width: 10px"
-              @click="
-                reciboStore.form.serviceData[index].type != null
-                  ? confirmDelete(index)
-                  : reciboStore.form.serviceData.splice(index, 1)
-              "
+              class="tw-w-[48%]"
             />
-            <q-separator style="width: 100%" />
           </div>
           <q-btn
             round
-            color="primary"
-            icon="add"
+            icon="delete"
+            color="negative"
             size="xs"
-            @click="reciboStore.moreService"
-            style="
-              position: absolute;
-              bottom: -25px;
-              right: 50%;
-              transform: translateX(50%);
+            style="position: absolute; right: 5px; top: 1px; width: 10px"
+            @click="
+              reciboStore.form.serviceData[index].type != null
+                ? confirmDelete(index)
+                : reciboStore.form.serviceData.splice(index, 1)
             "
           />
+          <q-separator style="width: 100%" />
         </div>
-      </q-scroll-area>
-      <div class="full-width flex justify-end q-pa-xs">
-        <q-btn rounded color="primary" type="submit">Gerar Reciboo</q-btn>
+        <q-btn
+          round
+          color="primary"
+          icon="add"
+          size="xs"
+          @click="reciboStore.moreService"
+          style="
+            position: absolute;
+            bottom: -25px;
+            right: 50%;
+            transform: translateX(50%);
+          "
+        />
       </div>
-    </q-form>
-  </div>
+    </q-scroll-area>
+  </q-form>
 </template>
 <script setup>
 import { ref, onBeforeMount } from "vue";
@@ -152,6 +153,5 @@ onBeforeMount(() => {
 
 <style>
 .FormData > * {
-  width: 160px;
 }
 </style>

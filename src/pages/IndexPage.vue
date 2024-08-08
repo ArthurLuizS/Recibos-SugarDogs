@@ -1,21 +1,23 @@
 <template>
   <q-page class="BgSugar">
-    <div class="q-pa-xs">
+    <div class="tw-m-w-[100vw] tw-m-h-[100vw] tw-min-h-[100vh] flex">
       <q-stepper
         v-model="step"
         ref="stepper"
         color="primary"
         animated
         :contracted="$q.screen.lt.md"
+        class="tw-w-full col-grow tw-flex tw-flex-col tw-justify-between"
       >
         <q-step
           :name="1"
           title="Dados do Tutor e do Pet"
           icon="settings"
           :done="step > 1"
-          class="q-pa-xs"
+          :color="step > 1 ? 'primary' : '#26A69A'"
+          class="tw-w-full tw-h-full"
         >
-          <div class="flex tw-w-full">
+          <div class="flex tw-w-[100%] tw-min-h-[70vh] border">
             <label>Dados do Tutor e PET</label>
             <div class="flex column tw-w-full" style="gap: 16px">
               <div class="flex row tw-w-full tw-justify-between">
@@ -100,17 +102,28 @@
         <q-step
           :name="2"
           title="Serviços"
-          caption="Optional"
           icon="create_new_folder"
           :done="step > 2"
+          :color="step > 2 ? 'primary' : '#26A69A'"
+          class="tw-w-full tw-h-full"
         >
-          Form dos serviços
-          <formRecibo />
+          <div class="flex tw-w-full tw-h-[70vh]">
+            <formRecibo class="tw-w-full tw-h-full" />
+          </div>
         </q-step>
 
-        <q-step :name="3" title="Recibo" icon="add_comment">
-          <div ref="reciboDocument" class="tw-p-3">
-            <div>
+        <q-step
+          :name="3"
+          title="Recibo"
+          icon="add_comment"
+          :color="step == 3 ? 'primary' : '#26A69A'"
+          class="tw-w-full tw-h-full"
+        >
+          <div
+            ref="reciboDocument"
+            class="flex tw-w-[100%] tw-min-h-[70vh] border tw-p-3"
+          >
+            <div class="tw-w-full">
               <recibo />
             </div>
             <div class="pdf-only">
@@ -134,7 +147,9 @@
         </q-step>
 
         <template v-slot:navigation>
-          <q-stepper-navigation>
+          <q-stepper-navigation
+            class="tw-flex tw-justify-end tw-items-end q-pa-0"
+          >
             <q-btn
               @click="handleButton"
               color="primary"
@@ -147,37 +162,13 @@
               flat
               color="primary"
               @click="$refs.stepper.previous()"
-              label="Back"
+              label="Voltar"
               class="q-ml-sm"
             />
           </q-stepper-navigation>
         </template>
       </q-stepper>
-      {{ step }}
     </div>
-    <!-- <q-tabs
-        v-model="tab"
-        dense
-        class="text-grey"
-        active-color="primary"
-        indicator-color="primary"
-        align="justify"
-        narrow-indicator
-      >
-        <q-tab name="form" label="Dados do Recibo" />
-        <q-tab name="recibo" label="Recibo" />
-      </q-tabs>
-      <q-separator />
-      <q-tab-panels v-model="tab" animated>
-        <q-tab-panel name="form">
-          <form-recibo />
-        </q-tab-panel>
-      </q-tab-panels>
-      <q-tab-panels v-model="tab" animated>
-        <q-tab-panel name="recibo">
-          <recibo />
-        </q-tab-panel>
-      </q-tab-panels> -->
   </q-page>
 </template>
 
@@ -211,7 +202,7 @@ const gerarRecibo = () => {
     margin: 1,
     filename: "Recibo-SugarDogs.pdf",
     image: { type: "jpeg", quality: 0.98 },
-    html2canvas: { scale: 2 },
+    html2canvas: { scale: 3.5 },
     jsPDF: { unit: "in", format: "letter", orientation: "portrait" },
   };
 
@@ -236,7 +227,7 @@ onBeforeMount(() => {
 });
 </script>
 
-<style>
+<style lang="scss">
 .BgSugar {
   background-colord: #f7f7f7;
 }
@@ -247,10 +238,17 @@ onBeforeMount(() => {
   padding: 12px;
 }
 
+.q-stepper__nav {
+  @apply tw-py-4 tw-px-1;
+}
+
+.q-stepper--horizontal .q-stepper__line:before,
+.q-stepper--horizontal .q-stepper__line:after {
+  background-color: #eee123;
+}
 .pdf-only {
   display: none;
 }
-
 /* .FormData > * {
   width: 150px;
 } */
