@@ -42,8 +42,12 @@
           <tr
             v-for="(service, index) in reciboStore.form.serviceData"
             :key="index"
+            :class="{
+              'bg-purple text-white': index % 2 === 0,
+              'bg-yellow': index % 2 !== 0,
+            }"
           >
-            <td>{{ service?.quantity }} Uni.</td>
+            <td>{{ service?.quantity }}</td>
             <td>{{ service?.type }}</td>
             <td>{{ service?.unitPrice }}R$</td>
             <td>{{ service?.discount }}%</td>
