@@ -1,5 +1,5 @@
 <template>
-  <q-page class="BgSugar tw-flex tw-items-center tw-justify-center">
+  <q-page class="BgSugar tw-flex tw-items-center tw-justify-center tw-bg-black">
     <div class="tw-min-h-[100vh] tw-max-w-[600px] flex">
       <q-stepper
         v-model="step"
@@ -105,9 +105,12 @@
           icon="create_new_folder"
           :done="step > 2"
           :color="step > 2 ? 'primary' : '#26A69A'"
-          class="tw-w-full tw-h-full"
+          class="tw-h-full"
         >
-          <div class="flex tw-w-full tw-h-[70vh]">
+          <div
+            class="flex tw-h-[70vh]"
+            :class="$q.screen.gt.md ? '' : 'tw-w-[95vw]'"
+          >
             <formRecibo class="tw-w-full tw-h-full" />
           </div>
         </q-step>
@@ -183,17 +186,17 @@
 
 <script setup>
 import { ref, onBeforeMount } from "vue";
-import headerRecibo from "components/headerRecibo.vue";
+import { useQuasar } from "quasar";
 import formRecibo from "components/FormRecibo.vue";
 import recibo from "components/ReciboSugar.vue";
 import { useRecibo } from "src/stores/recibo";
 import html2pdf from "html2pdf.js";
 
+const $q = useQuasar();
+
 const reciboStore = useRecibo();
 const stepper = ref();
 const reciboDocument = ref();
-const ReciboSugar = ref();
-const tab = ref("form");
 
 const step = ref(1);
 const doneRecibo = ref(false);
