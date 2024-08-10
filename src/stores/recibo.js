@@ -15,7 +15,7 @@ export const useRecibo = defineStore("recibo", {
           type: null,
           quantity: 1,
           unitPrice: null,
-          discount: null,
+          discount: 0,
           servicePrice: null,
         },
       ],
@@ -26,6 +26,7 @@ export const useRecibo = defineStore("recibo", {
     discount: (state) => {
       for (let i = 0; i < state.form.serviceData.length; i += 1) {
         let service = state.form.serviceData[i];
+        if (service.discount === "") service.discount = 0;
         service.servicePrice =
           parseInt(service.unitPrice) * parseInt(service.quantity) -
           (parseInt(service.discount) / 100) *
@@ -39,7 +40,7 @@ export const useRecibo = defineStore("recibo", {
         type: null,
         quantity: 1,
         unitPrice: null,
-        discount: null,
+        discount: 0,
       });
     },
   },
