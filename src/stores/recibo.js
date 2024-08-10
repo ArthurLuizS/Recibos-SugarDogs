@@ -16,7 +16,7 @@ export const useRecibo = defineStore("recibo", {
           quantity: 1,
           unitPrice: 0,
           discount: 0,
-          servicePrice: null,
+          servicePrice: 0,
         },
       ],
       total: 0,
@@ -28,12 +28,11 @@ export const useRecibo = defineStore("recibo", {
       state.form.total = 0;
       for (let i = 0; i < state.form.serviceData.length; i += 1) {
         let service = state.form.serviceData[i];
-        if (service.discount === "") service.discount = 0;
-        if (service.unitPrice === "") service.unitPrice = 0;
+        let unitPrice = parseFloat(service.unitPrice) || 0;
+        let discount = parseFloat(service.discount) || 0;
+        let quantity = parseFloat(service.quantity) || 0;
         service.servicePrice =
-          parseInt(service.unitPrice) * parseInt(service.quantity) -
-          (parseInt(service.discount) / 100) *
-            (parseInt(service.unitPrice) * parseInt(service.quantity));
+          unitPrice * quantity - (discount / 100) * (unitPrice * quantity);
         state.form.total += service.servicePrice;
       }
     },
@@ -45,6 +44,7 @@ export const useRecibo = defineStore("recibo", {
         quantity: 1,
         unitPrice: 0,
         discount: 0,
+        servicePrice: 0,
       });
     },
   },
