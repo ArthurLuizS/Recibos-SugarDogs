@@ -10,17 +10,13 @@
           Registro dos Serviços oferecidos ao PET
         </h1>
         <div
-          class="FormData tw-min-h-[150px]"
+          class="FormData tw-mt-5 tw-min-h-[150px]"
           v-for="(service, index) in reciboStore.form.serviceData"
           :key="index"
           style="position: relative"
         >
-          <label style="position: absolute; top: 2px">
-            Serviço: {{ 1 + index }}</label
-          >
-          <div
-            class="flex row tw-justify-between q-pt-lg q-mb-md tw-gap-3 tw-mt-1"
-          >
+          <label> Serviço: {{ 1 + index }} </label>
+          <div class="flex row tw-justify-between q-pt-md q-mb-md tw-gap-3">
             <q-select
               dense
               :options="options"

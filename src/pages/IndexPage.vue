@@ -9,7 +9,6 @@
         :contracted="$q.screen.lt.md"
         class="tw-w-full col-grow tw-flex tw-flex-col tw-justify-between"
       >
-        <!-- teste git  -->
         <q-step
           :name="1"
           title="Dados do Tutor e do Pet"
@@ -18,11 +17,11 @@
           :color="step > 1 ? 'primary' : '#26A69A'"
           class="tw-w-full tw-h-full"
         >
-          <div class="flex tw-w-[100%] tw-min-h-[70vh] border">
-            <label>Dados do Tutor e PET</label>
-            <div class="flex column tw-w-full" style="gap: 16px">
-              <div class="flex row tw-w-full tw-justify-between">
-                <span class="tw-w-full">Tutor</span>
+          <div class="flex column tw-w-[100%] tw-min-h-[70vh]">
+            <h1 class="tw-text-lg tw-text-center">Dados do Tutor e PET</h1>
+            <div class="flex column tw-w-full tw-mt-5" style="gap: 16px">
+              <div class="flex row tw-w-full tw-justify-between tw-gap-3">
+                <span class="tw-w-full tw-text-lg">Tutor</span>
                 <q-input
                   dense
                   rounded
@@ -41,8 +40,9 @@
                   mask="(##) #####-####"
                 />
               </div>
-              <div class="flex row tw-w-full tw-justify-between">
-                <span class="tw-w-full">Pet</span>
+              <q-separator style="width: 100%" />
+              <div class="flex row tw-w-full tw-justify-between tw-gap-3">
+                <span class="tw-w-full tw-text-lg">Pet</span>
 
                 <q-input
                   dense
@@ -95,7 +95,6 @@
                   </template>
                 </q-input>
               </div>
-              <q-separator style="width: 100%" />
             </div>
           </div>
         </q-step>
