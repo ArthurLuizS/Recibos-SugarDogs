@@ -1,6 +1,6 @@
 <template>
-  <q-page class="BgSugar">
-    <div class="tw-m-w-[100vw] tw-m-h-[100vw] tw-min-h-[100vh] flex">
+  <q-page class="BgSugar tw-flex tw-items-center tw-justify-center">
+    <div class="tw-min-h-[100vh] tw-max-w-[600px] flex">
       <q-stepper
         v-model="step"
         ref="stepper"
@@ -121,27 +121,36 @@
         >
           <div
             ref="reciboDocument"
-            class="flex tw-w-[100%] tw-min-h-[70vh] border tw-p-3"
+            class="flex tw-w-[100%] tw-min-h-[70vh] tw-p-3"
           >
             <div class="tw-w-full">
               <recibo />
             </div>
-            <div class="pdf-only">
-              <span>
-                Orçamento elaborado por: Leticia Cândida Santos da Silva
-              </span>
-              <span>
-                Este é um recibo dos serviços da Sugar Dogs, sujeito às
-                condições a seguir indicadas: o preço da diária pode estar
-                sujeito a alterações em casos especificos, como: 1 - Datas
-                comemorátivas, 2 - Pacotes de hospedagens, 3 - Fidelidade. Todos
-                os valores são repassados previamente aos serviços.
-              </span>
-              <span> Agradecemos o seu contato! </span>
-              <span>
+            <div class="pdf-only tw-text-gray-500 tw-text-xs tw-italic">
+              <div class="tw-w-full">
+                Orçamento elaborado por:
+                <span class="tw-text-base"
+                  >Leticia Cândida Santos da Silva.</span
+                >
+              </div>
+              <div>
+                <span>
+                  Este é um recibo dos serviços da Sugar Dogs, sujeito às
+                  condições a seguir indicadas: o preço da diária pode estar
+                  sujeito a alterações em casos especificos, como: 1 - Datas
+                  comemorátivas, 2 - Pacotes de hospedagens, 3 - Fidelidade.
+                  Todos os valores são repassados previamente aos serviços.
+                </span>
+              </div>
+              <div
+                class="tw-w-full tw-text-center tw-text-base tw-text-black tw-font-semibold tw-mt-3"
+              >
+                <span> Agradecemos o seu contato! </span>
+              </div>
+              <div class="tw-text-center tw-mt-3 tw-text-black tw-font-bold">
                 Sugar Dogs, Rua Padre Antonio Fernandes, 87 Cordeiro Recife,
                 CEP: 50630-010 Telefone (81) 99888-4759 CNPJ: 48.174.470/0001-06
-              </span>
+              </div>
             </div>
           </div>
         </q-step>
@@ -195,9 +204,12 @@ const calcularDesconto = () => {
 };
 
 const gerarRecibo = () => {
-  console.log("gerar recibo");
-  console.log(reciboDocument);
-  console.log(ReciboSugar);
+  const pdfOnlyElements = reciboDocument.value.querySelectorAll(".pdf-only");
+
+  // Mostrar elementos com a classe 'pdf-only'
+  pdfOnlyElements.forEach((element) => {
+    element.style.display = "block";
+  });
   const options = {
     margin: 1,
     filename: "Recibo-SugarDogs.pdf",
@@ -206,7 +218,15 @@ const gerarRecibo = () => {
     jsPDF: { unit: "in", format: "letter", orientation: "portrait" },
   };
 
-  html2pdf().from(reciboDocument.value).set(options).save();
+  html2pdf()
+    .from(reciboDocument.value)
+    .set(options)
+    .save()
+    .then(() => {
+      pdfOnlyElements.forEach((element) => {
+        element.style.display = "none";
+      });
+    });
 };
 
 const handleButton = () => {
@@ -247,7 +267,12 @@ onBeforeMount(() => {
   background-color: #eee123;
 }
 .pdf-only {
-  display: none;
+  // display: none;
+}
+@media print {
+  .pdf-only {
+    display: block;
+  }
 }
 /* .FormData > * {
   width: 150px;
