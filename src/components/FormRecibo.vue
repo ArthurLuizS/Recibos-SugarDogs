@@ -31,6 +31,7 @@
               rounded
               outlined
               label="Quantidade"
+              type="number"
               v-model="reciboStore.form.serviceData[index].quantity"
               class="tw-w-[48%]"
             />
@@ -124,14 +125,6 @@ const onDateInput = () => {
   reciboStore.form.infoData.data = formatDate(todayValue.value);
 };
 
-const discount = (index) => {
-  // reciboStore.form.serviceData[index].servicePrice =
-  //   (parseInt(reciboStore.form.serviceData[index].discount) / 100) *
-  //     parseInt(reciboStore.form.serviceData[index].unitPrice) -
-  //   parseInt(reciboStore.form.serviceData[index].unitPrice);
-  // console.log(reciboStore.form.serviceData[index]);
-};
-
 const gerarRecibo = () => {
   console.log("gerar recibo");
   reciboStore.discount;
@@ -146,8 +139,3 @@ onBeforeMount(() => {
   reciboStore.form.infoData.data = `${dia}/${mes}/${ano}`;
 });
 </script>
-
-<style>
-.FormData > * {
-}
-</style>
