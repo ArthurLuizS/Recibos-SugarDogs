@@ -59,7 +59,7 @@ const password = ref("");
 const visibility = ref(false);
 
 const login = () => {
-  auth.username = username.value;
+  auth.username = username.value.toLowerCase();
   auth.password = password.value;
   auth.login();
 };

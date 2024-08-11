@@ -28,7 +28,9 @@ export const useAuth = defineStore("auth", {
           this.correctPassword == this.hashPassword
         ) {
           this.authenticated = true;
-          this.router.push("/");
+          setTimeout(() => {
+            this.router.push("/");
+          }, 500);
         }
       } catch (error) {
         console.error(error);
