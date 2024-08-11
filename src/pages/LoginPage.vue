@@ -10,7 +10,7 @@
       >
         <div class="tw-w-full tw-h-[80px]">
           <img
-            src="src/assets/sugar-logo.png"
+            src="../assets/sugar-logo.png"
             class="tw-w-[100px] tw-h-[100px] tw-rounded-full tw-absolute tw-top-0 tw-left-[50%] tw-translate-x-[-50%] tw-translate-y-[-50%]"
           />
         </div>

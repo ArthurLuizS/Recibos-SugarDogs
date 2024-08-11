@@ -3,7 +3,7 @@
     <div class="header flex row justify-between">
       <div>
         <q-img
-          src="src/assets/sugar-logo.png"
+          src="../assets/sugar-logo.png"
           class="tw-w-[120px] tw-h-[120px]"
         />
       </div>

@@ -104,11 +104,11 @@
             </div>
             <div class="flex row justify-center tw-z-[0]">
               <img
-                src="src/assets/beagle.png"
+                src="../assets/beagle.png"
                 class="tw-w-[150px] tw-h-[150px] tw-scale-[2]"
               />
               <img
-                src="src/assets/buldog.png"
+                src="../assets/buldog.png"
                 class="tw-w-[150px] tw-h-[150px]"
               />
             </div>
