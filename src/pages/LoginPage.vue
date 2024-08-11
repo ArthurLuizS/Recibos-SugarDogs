@@ -1,64 +1,66 @@
 <template>
-  <q-page class="flex flex-center">
-    <!-- TODO: refazer toda a página  -->
-    <q-card>
-      <q-card-section>
-        <div class="text-h6">Login</div>
-      </q-card-section>
-
-      <q-card-section>
-        <q-input v-model="username" label="Usuário" />
-        <q-input v-model="password" label="Senha" type="password" />
-        <q-btn @click="login" label="Entrar" color="primary" class="q-mt-md" />
-      </q-card-section>
-    </q-card>
+  <q-page
+    class="flex flex-center tw-bg-gradient-to-b tw-from-[#eee123] tw-to-[#a800fe]"
+  >
+    <div
+      class="tw-w-[245px] tw-h-[275px] tw-bg-gradient-to-r tw-from-[#a800fe] tw-to-[#eee123] tw-rounded-tl-[20px] tw-rounded-tr-[15px] tw-rounded-br-[20px] tw-pt-[5px] tw-pr-[2px]"
+    >
+      <div
+        class="tw-w-[240px] tw-h-[270px] tw-flex tw-flex-col tw-relative tw-justify-between tw-bg-white tw-rounded-tl-xl tw-rounded-tr-xl tw-rounded-bl-xl tw-rounded-br-2xl tw-shadow-2xl"
+      >
+        <div class="tw-w-full tw-h-[80px]">
+          <img
+            src="src/assets/sugar-logo.png"
+            class="tw-w-[100px] tw-h-[100px] tw-rounded-full tw-absolute tw-top-0 tw-left-[50%] tw-translate-x-[-50%] tw-translate-y-[-50%]"
+          />
+        </div>
+        <div class="tw-w-full tw-p-3 tw-flex tw-flex-col tw-gap-3 boder">
+          <q-input label="Usuário" outlined flat dense v-model="username">
+            <template v-slot:append>
+              <q-icon class="tw-cursor-pointer" name="person" />
+            </template>
+          </q-input>
+          <q-input
+            label="Senha"
+            outlined
+            flat
+            dense
+            :type="visibility ? 'text' : 'password'"
+            v-model="password"
+          >
+            <template v-slot:append>
+              <q-icon
+                class="tw-cursor-pointer"
+                :name="visibility ? 'visibility' : 'visibility_off'"
+                @click="visibility = !visibility"
+              />
+            </template>
+          </q-input>
+        </div>
+        <div
+          class="tw-w-full tw-flex tw-items-center tw-justify-center tw-pb-2"
+        >
+          <q-btn rounded color="primary" label="Entrar" @click="login" />
+        </div>
+      </div>
+    </div>
   </q-page>
 </template>
 
 <script setup>
 import { ref } from "vue";
-import { useRouter } from "vue-router";
-import CryptoJS from "crypto-js";
+import { useAuth } from "src/stores/auth";
+
+const auth = useAuth();
 
 const username = ref("");
 const password = ref("");
-const correctPassword = ref("986899b4b2c7fa062d849a629f41c327");
-const hash = ref(null);
+
+const visibility = ref(false);
 
 const login = () => {
-  hash.value = CryptoJS.MD5(password.value);
-  console.log(`hash da senha: ${hash.value}`);
-  if (correctPassword.value == hash.value) console.log("senha correta");
+  auth.username = username.value;
+  auth.password = password.value;
+  auth.login();
 };
-
-// export default {
-//   setup() {
-//     const username = ref("");
-//     const password = ref("");
-//     const errorMessage = ref("");
-//     const router = useRouter();
-
-//     const validUsername = "amiga";
-//     const validPasswordHash = "5f4dcc3b5aa765d61d8327deb882cf99"; // hash de "password"
-
-//     const login = () => {
-//       if (
-//         username.value === validUsername &&
-//         md5(password.value).toString() === validPasswordHash
-//       ) {
-//         localStorage.setItem("authenticated", "true");
-//         router.push("/recibo");
-//       } else {
-//         errorMessage.value = "Usuário ou senha incorretos";
-//       }
-//     };
-
-//     return {
-//       username,
-//       password,
-//       errorMessage,
-//       login,
-//     };
-//   },
-// };
 </script>
