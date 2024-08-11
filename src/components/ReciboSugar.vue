@@ -82,7 +82,7 @@ const columns = [
     label: "Preço",
     field: "unitPrice",
     align: "left",
-    format: (val) => (val != null && val !== "" ? `${val}R$` : ""),
+    format: (val) => (val != null && val !== "" ? `R$${val}` : ""),
   },
   {
     name: "desconto",
@@ -96,7 +96,7 @@ const columns = [
     field: "servicePrice",
     label: "Total",
     align: "right",
-    format: (val) => `${val}R$`,
+    format: (val) => `R$${val}`,
   },
 ];
 
