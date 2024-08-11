@@ -1,6 +1,9 @@
 <template>
   <q-page class="BgSugar tw-flex tw-items-center tw-justify-center tw-bg-black">
-    <div class="tw-min-h-[100vh] tw-max-w-[600px] flex">
+    <div
+      class="tw-min-h-[100vh] flex"
+      :class="$q.screen.gt.md ? 'tw-max-w-[600px]' : 'tw-w-[100vw]'"
+    >
       <q-stepper
         v-model="step"
         ref="stepper"
@@ -12,14 +15,17 @@
         <q-step
           :name="1"
           title="Dados do Tutor e do Pet"
-          icon="settings"
+          icon="pets"
           :done="step > 1"
           :color="step > 1 ? 'primary' : '#26A69A'"
-          class="tw-w-full tw-h-full"
+          class="tw-w-full tw-h-full tw-overflow-hidden"
         >
-          <div class="flex column tw-w-[100%] tw-min-h-[70vh]">
+          <div class="flex column tw-w-[100%] tw-min-h-[70vh] justify-between">
             <h1 class="tw-text-lg tw-text-center">Dados do Tutor e PET</h1>
-            <div class="flex column tw-w-full tw-mt-5" style="gap: 16px">
+            <div
+              class="flex column tw-w-full tw-mt-5 tw-z-[1]"
+              style="gap: 16px"
+            >
               <div class="flex row tw-w-full tw-justify-between tw-gap-3">
                 <span class="tw-w-full tw-text-lg">Tutor</span>
                 <q-input
@@ -96,13 +102,23 @@
                 </q-input>
               </div>
             </div>
+            <div class="flex row justify-center tw-z-[0]">
+              <img
+                src="src/assets/beagle.png"
+                class="tw-w-[150px] tw-h-[150px] tw-scale-[2]"
+              />
+              <img
+                src="src/assets/buldog.png"
+                class="tw-w-[150px] tw-h-[150px]"
+              />
+            </div>
           </div>
         </q-step>
 
         <q-step
           :name="2"
           title="Serviços"
-          icon="create_new_folder"
+          icon="pets"
           :done="step > 2"
           :color="step > 2 ? 'primary' : '#26A69A'"
           class="tw-h-full"
@@ -118,13 +134,14 @@
         <q-step
           :name="3"
           title="Recibo"
-          icon="add_comment"
+          icon="receipt_long"
           :color="step == 3 ? 'primary' : '#26A69A'"
           class="tw-w-full tw-h-full"
         >
+          <div class="tw-text-lg tw-text-center">Pré Visualização</div>
           <div
             ref="reciboDocument"
-            class="flex tw-w-[100%] tw-min-h-[70vh] tw-p-3"
+            class="flex tw-w-[100%] tw-min-h-[70vh] tw-px-3"
           >
             <div class="tw-w-full">
               <recibo />
@@ -160,15 +177,8 @@
 
         <template v-slot:navigation>
           <q-stepper-navigation
-            class="tw-flex tw-justify-end tw-items-end q-pa-0"
+            class="tw-flex tw-justify-end tw-items-end q-pa-0 tw-relative"
           >
-            <q-btn
-              @click="handleButton"
-              color="primary"
-              :label="step === 3 ? 'Exportar Recibo' : 'Continuar'"
-              v-if="step < 3"
-            />
-            <q-btn v-else label="exportar recibo" @click="gerarRecibo" />
             <q-btn
               v-if="step > 1"
               flat
@@ -176,6 +186,20 @@
               @click="$refs.stepper.previous()"
               label="Voltar"
               class="q-ml-sm"
+            />
+            <q-btn
+              @click="handleButton"
+              color="primary"
+              :label="step === 3 ? 'Exportar Recibo' : 'Continuar'"
+              v-if="step < 3"
+            />
+            <q-btn
+              v-else
+              rounded
+              color="primary"
+              label="Baixar recibo"
+              @click="gerarRecibo"
+              class="tw-absolute tw-left-3"
             />
           </q-stepper-navigation>
         </template>
@@ -251,8 +275,8 @@ onBeforeMount(() => {
 </script>
 
 <style lang="scss">
-.BgSugar {
-  background-colord: #f7f7f7;
+.q-stepper {
+  background-color: #f7f7f7 !important;
 }
 .q-tab-panel {
   padding: 0;
