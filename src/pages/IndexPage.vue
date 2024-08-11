@@ -1,7 +1,7 @@
 <template>
-  <q-page class="BgSugar tw-flex tw-items-center tw-justify-center tw-bg-black">
+  <q-page class="BgSugar tw-flex tw-justify-center tw-bg-black">
     <div
-      class="tw-min-h-[100vh] flex"
+      class="flex"
       :class="$q.screen.gt.md ? 'tw-max-w-[600px]' : 'tw-w-[100vw]'"
     >
       <q-stepper
@@ -237,9 +237,14 @@ const gerarRecibo = () => {
   pdfOnlyElements.forEach((element) => {
     element.style.display = "block";
   });
+  const filename = () => {
+    if (reciboStore.form.infoData.petName !== null)
+      return `Recibo-${reciboStore.form.infoData.petName}-SugarDogs`;
+    return "Recibo-SugarDogs.pdf";
+  };
   const options = {
     margin: 1,
-    filename: "Recibo-SugarDogs.pdf",
+    filename: filename(),
     image: { type: "jpeg", quality: 0.98 },
     html2canvas: { scale: 3.5 },
     jsPDF: { unit: "in", format: "letter", orientation: "portrait" },
@@ -294,7 +299,7 @@ onBeforeMount(() => {
   background-color: #eee123;
 }
 .pdf-only {
-  // display: none;
+  display: none;
 }
 @media print {
   .pdf-only {
