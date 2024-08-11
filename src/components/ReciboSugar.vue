@@ -1,6 +1,6 @@
 <template>
   <div class="container" ref="ReciboSugar">
-    <div class="header tw-p-[20px] flex row justify-between">
+    <div class="header flex row justify-between">
       <div>
         <q-img
           src="src/assets/sugar-logo.png"
@@ -8,7 +8,7 @@
         />
       </div>
       <div
-        class="flex column tw-text-sm tw-max-w-[150px] tw-overflow-hidden tw-capitalize"
+        class="flex column tw-text-sm tw-max-w-[150px] tw-h-[150px] tw-overflow-hidden tw-capitalize"
       >
         <div class="flex column tw-max-w-[150px]">
           <span class="tw-text-4xl tw-text-gray-600">Recibo</span>
@@ -38,7 +38,7 @@
         </div>
       </div>
     </div>
-    <div class="">
+    <div class="q-mt-md">
       <q-table
         dense
         hide-bottom
