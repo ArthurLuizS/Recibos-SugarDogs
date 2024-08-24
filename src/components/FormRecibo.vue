@@ -89,7 +89,7 @@
   </q-form>
 </template>
 <script setup>
-import { ref, onBeforeMount } from "vue";
+import { ref } from "vue";
 import { useRecibo } from "src/stores/recibo";
 import { useQuasar } from "quasar";
 
@@ -114,28 +114,8 @@ const confirmDelete = (indexService) => {
     .onCancel(() => {});
 };
 
-const formatDate = (date) => {
-  if (!date) return "";
-  const [year, month, day] = date.split("/");
-  return `${day}/${month}/${year}`;
-};
-
-const onDateInput = () => {
-  console.log(todayValue.value);
-  reciboStore.form.infoData.data = formatDate(todayValue.value);
-};
-
 const gerarRecibo = () => {
   console.log("gerar recibo");
   reciboStore.discount;
 };
-
-onBeforeMount(() => {
-  const dataAtual = new Date();
-  const dia = String(dataAtual.getDate()).padStart(2, "0");
-  const mes = String(dataAtual.getMonth() + 1).padStart(2, "0");
-  const ano = dataAtual.getFullYear();
-
-  reciboStore.form.infoData.data = `${dia}/${mes}/${ano}`;
-});
 </script>

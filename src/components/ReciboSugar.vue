@@ -15,8 +15,8 @@
           <span class="tw-text-base tw-text-center">
             {{
               reciboStore.form.infoData.data != null
-                ? reciboStore.form.infoData.data
-                : dataFormatada
+                ? formatDate(reciboStore.form.infoData.data)
+                : "dataFormatada"
             }}
           </span>
         </div>
@@ -109,12 +109,11 @@ const rows = ref([
 
 const rowClass = (row, index) => (index % 2 === 0 ? "even-row" : "odd-row");
 
-const dataAtual = new Date();
-const dia = String(dataAtual.getDate()).padStart(2, "0");
-const mes = String(dataAtual.getMonth() + 1).padStart(2, "0");
-const ano = dataAtual.getFullYear();
-
-const dataFormatada = `${dia}/${mes}/${ano}`;
+const formatDate = (date) => {
+  if (!date) return "";
+  const [year, month, day] = date.split("-");
+  return `${day}/${month}/${year}`;
+};
 </script>
 
 <style>

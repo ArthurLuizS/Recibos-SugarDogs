@@ -70,36 +70,13 @@
               <div class="flex row tw-w-full tw-justify-between">
                 <span class="tw-w-full">Data do Recibo</span>
                 <q-input
+                  v-model="reciboStore.form.infoData.data"
                   dense
                   rounded
                   outlined
-                  v-model="reciboStore.form.infoData.data"
+                  type="date"
                   class="tw-w-[48%]"
-                >
-                  <template v-slot:append>
-                    <q-icon name="event" class="cursor-pointer">
-                      <q-popup-proxy
-                        cover
-                        transition-show="scale"
-                        transition-hide="scale"
-                      >
-                        <q-date
-                          v-model="todayValue"
-                          @update:model-value="onDateInput"
-                        >
-                          <div class="row items-center justify-end">
-                            <q-btn
-                              v-close-popup
-                              label="Fechar"
-                              color="primary"
-                              flat
-                            />
-                          </div>
-                        </q-date>
-                      </q-popup-proxy>
-                    </q-icon>
-                  </template>
-                </q-input>
+                />
               </div>
             </div>
             <div class="flex row justify-center tw-z-[0]">
@@ -275,7 +252,7 @@ onBeforeMount(() => {
   const mes = String(dataAtual.getMonth() + 1).padStart(2, "0");
   const ano = dataAtual.getFullYear();
 
-  reciboStore.form.infoData.data = `${dia}/${mes}/${ano}`;
+  reciboStore.form.infoData.data = `${ano}-${mes}-${dia}`;
 });
 </script>
 
